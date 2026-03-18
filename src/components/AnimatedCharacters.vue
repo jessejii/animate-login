@@ -7,6 +7,7 @@
         <div
           ref="purpleRef"
           class="absolute bottom-0 transition-all duration-700 ease-in-out"
+          :class="{ 'error-wiggle-purple': isErrorExpressionActive }"
           :style="{
             left: '70px',
           width: '180px',
@@ -37,8 +38,8 @@
             eye-color="white"
             pupil-color="#2D2D2D"
             :is-blinking="isPurpleBlinking"
-            :force-look-x="(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined"
-            :force-look-y="(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined"
+            :force-look-x="(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isErrorExpressionActive ? 0 : isLookingAtEachOther ? 3 : undefined"
+            :force-look-y="(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isErrorExpressionActive ? 5 : isLookingAtEachOther ? 4 : undefined"
           />
           <EyeBall
             :size="18"
@@ -47,10 +48,23 @@
             eye-color="white"
             pupil-color="#2D2D2D"
             :is-blinking="isPurpleBlinking"
-            :force-look-x="(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined"
-            :force-look-y="(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined"
+            :force-look-x="(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isErrorExpressionActive ? 0 : isLookingAtEachOther ? 3 : undefined"
+            :force-look-y="(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isErrorExpressionActive ? 5 : isLookingAtEachOther ? 4 : undefined"
           />
         </div>
+
+        <div
+          v-if="isErrorExpressionActive"
+          class="absolute rounded-full"
+          :style="{
+            left: `${118 + purplePos.faceX}px`,
+            top: `${72 + purplePos.faceY}px`,
+            width: '9px',
+            height: '14px',
+            backgroundColor: 'rgba(178, 226, 255, 0.95)',
+            transform: 'rotate(12deg)',
+          }"
+        />
       </div>
       </div>
 
@@ -59,6 +73,7 @@
         <div
           ref="blackRef"
           class="absolute bottom-0 transition-all duration-700 ease-in-out"
+          :class="{ 'error-shake-black': isErrorExpressionActive }"
           :style="{
             left: '240px',
           width: '120px',
@@ -91,8 +106,8 @@
             eye-color="white"
             pupil-color="#2D2D2D"
             :is-blinking="isBlackBlinking"
-            :force-look-x="(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined"
-            :force-look-y="(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined"
+            :force-look-x="(password.length > 0 && showPassword) ? -4 : isErrorExpressionActive ? -1 : isLookingAtEachOther ? 0 : undefined"
+            :force-look-y="(password.length > 0 && showPassword) ? -4 : isErrorExpressionActive ? 5 : isLookingAtEachOther ? -4 : undefined"
           />
           <EyeBall
             :size="16"
@@ -101,10 +116,35 @@
             eye-color="white"
             pupil-color="#2D2D2D"
             :is-blinking="isBlackBlinking"
-            :force-look-x="(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined"
-            :force-look-y="(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined"
+            :force-look-x="(password.length > 0 && showPassword) ? -4 : isErrorExpressionActive ? -1 : isLookingAtEachOther ? 0 : undefined"
+            :force-look-y="(password.length > 0 && showPassword) ? -4 : isErrorExpressionActive ? 5 : isLookingAtEachOther ? -4 : undefined"
           />
         </div>
+
+        <div
+          class="absolute transition-all duration-200 ease-out"
+          :style="{
+            left: `${44 + blackPos.faceX}px`,
+            top: `${90 + blackPos.faceY}px`,
+            width: isErrorExpressionActive ? '30px' : '24px',
+            height: isErrorExpressionActive ? '10px' : '4px',
+            backgroundColor: '#f7f7f7',
+            borderRadius: isErrorExpressionActive ? '12px 12px 0 0' : '6px',
+          }"
+        />
+
+        <div
+          v-if="isErrorExpressionActive"
+          class="absolute rounded-full"
+          :style="{
+            left: `${86 + blackPos.faceX}px`,
+            top: `${68 + blackPos.faceY}px`,
+            width: '7px',
+            height: '11px',
+            backgroundColor: 'rgba(178, 226, 255, 0.95)',
+            transform: 'rotate(18deg)',
+          }"
+        />
       </div>
       </div>
 
@@ -113,6 +153,7 @@
         <div
           ref="orangeRef"
           class="absolute bottom-0 transition-all duration-700 ease-in-out"
+          :class="{ 'error-bounce': isErrorExpressionActive }"
           :style="{
             left: '0px',
           width: '240px',
@@ -147,6 +188,32 @@
             backgroundColor: 'rgba(255, 120, 120, 0.5)',
             borderRadius: '50%',
             transform: `scale(${orangeExpression.blushScale})`,
+          }"
+        />
+
+        <!-- Cute tears on login error -->
+        <div
+          v-if="isErrorExpressionActive"
+          class="absolute rounded-full transition-all duration-200"
+          :style="{
+            left: `${84 + orangePos.faceX}px`,
+            top: `${102 + orangePos.faceY}px`,
+            width: '8px',
+            height: '12px',
+            backgroundColor: 'rgba(180, 224, 255, 0.95)',
+            transform: 'rotate(-8deg)',
+          }"
+        />
+        <div
+          v-if="isErrorExpressionActive"
+          class="absolute rounded-full transition-all duration-200"
+          :style="{
+            left: `${126 + orangePos.faceX}px`,
+            top: `${102 + orangePos.faceY}px`,
+            width: '8px',
+            height: '12px',
+            backgroundColor: 'rgba(180, 224, 255, 0.95)',
+            transform: 'rotate(8deg)',
           }"
         />
 
@@ -253,6 +320,7 @@
         <div
           ref="yellowRef"
           class="absolute bottom-0 transition-all duration-700 ease-in-out"
+          :class="{ 'error-pop-yellow': isErrorExpressionActive }"
           :style="{
             left: '310px',
           width: '140px',
@@ -276,23 +344,41 @@
             :size="12"
             :max-distance="5"
             pupil-color="#2D2D2D"
-            :force-look-x="(password.length > 0 && showPassword) ? -5 : undefined"
-            :force-look-y="(password.length > 0 && showPassword) ? -4 : undefined"
+            :force-look-x="(password.length > 0 && showPassword) ? -5 : isErrorExpressionActive ? 0 : undefined"
+            :force-look-y="(password.length > 0 && showPassword) ? -4 : isErrorExpressionActive ? 5 : undefined"
           />
           <Pupil
             :size="12"
             :max-distance="5"
             pupil-color="#2D2D2D"
-            :force-look-x="(password.length > 0 && showPassword) ? -5 : undefined"
-            :force-look-y="(password.length > 0 && showPassword) ? -4 : undefined"
+            :force-look-x="(password.length > 0 && showPassword) ? -5 : isErrorExpressionActive ? 0 : undefined"
+            :force-look-y="(password.length > 0 && showPassword) ? -4 : isErrorExpressionActive ? 5 : undefined"
           />
         </div>
+
+        <div
+          v-if="isErrorExpressionActive"
+          class="absolute rounded-full"
+          :style="{
+            left: `${102 + yellowPos.faceX}px`,
+            top: `${58 + yellowPos.faceY}px`,
+            width: '7px',
+            height: '11px',
+            backgroundColor: 'rgba(178, 226, 255, 0.95)',
+            transform: 'rotate(14deg)',
+          }"
+        />
+
         <!-- Horizontal line for mouth -->
         <div
-          class="absolute w-20 h-[4px] bg-[#2D2D2D] rounded-full transition-all duration-200 ease-out"
+          class="absolute transition-all duration-200 ease-out"
           :style="{
             left: (password.length > 0 && showPassword) ? '10px' : `${40 + yellowPos.faceX}px`,
             top: (password.length > 0 && showPassword) ? '88px' : `${88 + yellowPos.faceY}px`,
+            width: isErrorExpressionActive ? '42px' : '80px',
+            height: isErrorExpressionActive ? '12px' : '4px',
+            backgroundColor: '#2D2D2D',
+            borderRadius: isErrorExpressionActive ? '10px 10px 0 0' : '999px',
           }"
         />
       </div>
@@ -310,6 +396,7 @@ const props = defineProps<{
   isTyping: boolean
   password: string
   showPassword: boolean
+  loginErrorTick: number
 }>()
 
 const mouseX = ref(0)
@@ -320,6 +407,7 @@ const isOrangeBlinking = ref(false)
 const isLookingAtEachOther = ref(false)
 const isPurplePeeking = ref(false)
 const isEntranceReady = ref(false)
+const isErrorExpressionActive = ref(false)
 
 const purpleRef = ref<HTMLElement | null>(null)
 const blackRef = ref<HTMLElement | null>(null)
@@ -351,6 +439,7 @@ const orangePos = computed(() => calculatePosition(orangeRef.value))
 const orangeExpression = computed(() => {
   const skew = orangePos.value.bodySkew
   const isPeeking = props.password.length > 0 && props.showPassword
+  const isError = isErrorExpressionActive.value
 
   let expression = {
     eyeHeight: 18,
@@ -364,7 +453,20 @@ const orangeExpression = computed(() => {
     blushScale: 1,
   }
 
-  if (isPeeking) {
+  if (isError) {
+    expression = {
+      ...expression,
+      eyeHeight: 12,
+      eyeShineX: 1,
+      mouthWidth: 18,
+      mouthHeight: 8,
+      mouthRadius: '10px 10px 0 0',
+      mouthRotate: 0,
+      leftEyebrowRotate: -25,
+      rightEyebrowRotate: 25,
+      blushScale: 1.5,
+    }
+  } else if (isPeeking) {
     expression = {
       ...expression,
       eyeHeight: 10,
@@ -436,6 +538,7 @@ let entranceTimer: ReturnType<typeof setTimeout> | null = null
 let typingLookTimer: ReturnType<typeof setTimeout> | null = null
 let purplePeekTimeout: ReturnType<typeof setTimeout> | null = null
 let purplePeekEndTimeout: ReturnType<typeof setTimeout> | null = null
+let errorExpressionTimer: ReturnType<typeof setTimeout> | null = null
 
 const clearTimer = (timer: ReturnType<typeof setTimeout> | null) => {
   if (timer) clearTimeout(timer)
@@ -533,6 +636,7 @@ onUnmounted(() => {
   clearTimer(orangeBlinkTimeout)
   clearTimer(entranceTimer)
   clearTimer(typingLookTimer)
+  clearTimer(errorExpressionTimer)
   stopPurplePeekLoop()
 })
 
@@ -552,6 +656,26 @@ watch(
     }
 
     isLookingAtEachOther.value = false
+  },
+)
+
+watch(
+  () => props.loginErrorTick,
+  (newTick, oldTick) => {
+    if (!newTick || newTick === oldTick) return
+
+    clearTimer(errorExpressionTimer)
+    isErrorExpressionActive.value = false
+
+    requestAnimationFrame(() => {
+      if (isUnmounted) return
+      isErrorExpressionActive.value = true
+    })
+
+    errorExpressionTimer = setTimeout(() => {
+      if (isUnmounted) return
+      isErrorExpressionActive.value = false
+    }, 1800)
   },
 )
 
@@ -596,6 +720,22 @@ watch(
   animation: dropYellow 1.02s cubic-bezier(0.22, 1.08, 0.3, 1) 0.12s forwards;
 }
 
+.error-bounce {
+  animation: errorBounce 0.62s ease-out;
+}
+
+.error-wiggle-purple {
+  animation: errorWigglePurple 0.64s ease-out;
+}
+
+.error-shake-black {
+  animation: errorShakeBlack 0.56s ease-out;
+}
+
+.error-pop-yellow {
+  animation: errorPopYellow 0.58s ease-out;
+}
+
 @keyframes dropPurple {
   0% { transform: translateY(-340px) scale(0.9) rotate(-8deg); }
   60% { transform: translateY(22px) scale(1.02) rotate(3deg); }
@@ -623,5 +763,37 @@ watch(
   60% { transform: translateY(20px) scale(1.03) rotate(-5deg); }
   80% { transform: translateY(-9px) scale(0.99) rotate(2deg); }
   100% { transform: translateY(0) scale(1) rotate(0deg); }
+}
+
+@keyframes errorBounce {
+  0% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translateY(-8px) rotate(-4deg); }
+  42% { transform: translateY(5px) rotate(3deg); }
+  65% { transform: translateY(-3px) rotate(-2deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes errorWigglePurple {
+  0% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(-5deg); }
+  55% { transform: translateY(3px) rotate(4deg); }
+  80% { transform: translateY(-2px) rotate(-2deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes errorShakeBlack {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes errorPopYellow {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-10px) scale(1.04); }
+  60% { transform: translateY(4px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); }
 }
 </style>

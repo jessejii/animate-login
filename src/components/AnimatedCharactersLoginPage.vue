@@ -18,6 +18,7 @@
         :is-typing="isTyping"
         :password="password"
         :show-password="showPassword"
+        :login-error-tick="loginErrorTick"
       />
 
       <div class="relative z-20 flex items-center gap-8 text-sm text-primary-foreground/60">
@@ -164,6 +165,7 @@ const error = ref('')
 const isLoading = ref(false)
 const isTyping = ref(false)
 const rememberMe = ref(false)
+const loginErrorTick = ref(0)
 
 const normalizedEmail = computed(() => email.value.trim().toLowerCase())
 const canSubmit = computed(() => normalizedEmail.value.length > 0 && password.value.length > 0)
@@ -184,6 +186,7 @@ const handleSubmit = async () => {
     ElMessage.success('Login successful! Welcome, Erik!')
   } else {
     error.value = 'Invalid email or password. Please try again.'
+    loginErrorTick.value += 1
   }
 
   isLoading.value = false
