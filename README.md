@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Animate Login
 
-## Getting Started
+一个基于 `Vue 3 + Vite + TypeScript + Element Plus + Tailwind CSS` 的动画登录页示例。
 
-First, run the development server:
+## 项目亮点
+
+- 动态角色联动：角色会跟随鼠标、输入状态与密码可见状态变化
+- 细节动画：眨眼、入场、窥视等微交互
+- 响应式布局：桌面双栏 + 移动端单栏
+- 简洁工程结构：组件拆分清晰，便于二次开发
+
+## 技术栈
+
+- `Vue 3`
+- `Vite`
+- `TypeScript`
+- `Vue Router`
+- `Element Plus`
+- `Tailwind CSS`
+
+## 快速开始
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+访问：`http://localhost:5173`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 可用脚本
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev         # 启动开发环境
+npm run build       # 类型检查并打包
+npm run preview     # 预览打包结果
+npm run type-check  # 仅类型检查
+```
 
-## Learn More
+## 登录演示账号
 
-To learn more about Next.js, take a look at the following resources:
+- Email: `erik@gmail.com`
+- Password: `1234`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 目录结构
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+src/
+  components/
+    AnimatedCharacters.vue
+    AnimatedCharactersLoginPage.vue
+    EyeBall.vue
+    Pupil.vue
+  router/
+    index.ts
+  views/
+    HomeView.vue
+  assets/
+    main.css
+  App.vue
+  main.ts
+```
 
-## Deploy on Vercel
+## 最近优化内容
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 修复角色动画中的定时器清理逻辑，避免页面切换后潜在的计时器泄漏
+- 改进登录提交流程（空值校验、按钮禁用、成功提示）
+- 清理无用导入与项目元信息（页面标题、包名）
+- 补充 `vite` 类型声明，解决样式导入类型报错
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 说明
+
+当前为前端演示项目，登录逻辑使用本地模拟，不包含真实后端鉴权。
